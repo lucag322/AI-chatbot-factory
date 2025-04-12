@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Chatbot {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  contexts     Context[]
+  apiKey       String   @unique @default(cuid())
+}
+
+   model Context {
+     id          String   @id @default(cuid())
+     title       String
+     content     String
+     createdAt   DateTime @default(now())
+     updatedAt   DateTime @updatedAt
+     chatbotId   String
+     chatbot     Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+   }

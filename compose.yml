@@ -1,0 +1,16 @@
+services:
+  chatbot-factory:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5555:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./front/prisma/dev.db:/app/prisma/dev.db
+      - ./front/src:/app/src
+      - ./.env:/app/.env
+      - ./front/public:/app/public
+    command: npm run start
