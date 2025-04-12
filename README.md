@@ -70,23 +70,6 @@ Un système complet de création et de gestion de chatbots IA basés sur OpenAI,
 2. Collez ce script dans le code HTML de votre site web
 3. Le chatbot apparaîtra automatiquement sur votre site
 
-## Structure du projet
-
-AI-chatbot-factory/
-├── .env # Variables d'environnement
-├── compose.yml # Configuration Docker Compose
-├── front/ # Application Next.js
-│ ├── prisma/ # Schéma et migrations de la base de données
-│ ├── public/ # Fichiers statiques
-│ ├── src/ # Code source
-│ │ ├── app/ # Routes et pages Next.js
-│ │ ├── components/ # Composants React réutilisables
-│ │ └── lib/ # Utilitaires et services
-│ ├── .env # Variables d'environnement (dev local)
-│ ├── Dockerfile # Configuration Docker
-│ └── package.json # Dépendances et scripts
-└── README.md # Documentation
-
 ## Déploiement en production
 
 Pour un déploiement en production:
