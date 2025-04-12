@@ -2,8 +2,6 @@
 
 Un système complet de création et de gestion de chatbots IA basés sur OpenAI, avec une interface d'administration et une API d'intégration pour sites web.
 
-![Chatbot Factory Logo](https://votre-url-image-logo.png)
-
 ## Fonctionnalités
 
 - 🤖 **Création de chatbots personnalisés** - Générez des assistants IA adaptés à vos besoins
