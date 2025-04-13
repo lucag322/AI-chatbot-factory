@@ -43,7 +43,7 @@ export default async function EditContextPage({
         <div className="mb-6">
           <Link
             href={`/chatbots/${id}`}
-            className="text-blue-600 hover:text-blue-800"
+            className="text-white hover:text-gray-400"
           >
             ← Retour au chatbot
           </Link>
@@ -51,7 +51,7 @@ export default async function EditContextPage({
 
         <h1 className="text-3xl font-bold mb-6">Modifier le contexte</h1>
 
-        <div className="bg-white shadow-md rounded-lg p-6 border border-gray-300">
+        <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300">
           <ContextForm
             chatbotId={id}
             initialData={{

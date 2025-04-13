@@ -78,7 +78,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
         />
       </div>
 
@@ -94,7 +94,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
         />
       </div>
 

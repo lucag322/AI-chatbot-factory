@@ -67,7 +67,10 @@ export default function ContextForm({
       )}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-black">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-foreground"
+        >
           Titre du contexte
         </label>
         <input
@@ -76,14 +79,14 @@ export default function ContextForm({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
         />
       </div>
 
       <div>
         <label
           htmlFor="content"
-          className="block text-sm font-medium text-black"
+          className="block text-sm font-medium text-foreground"
         >
           Contenu
         </label>
@@ -93,7 +96,7 @@ export default function ContextForm({
           onChange={(e) => setContent(e.target.value)}
           rows={10}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
           placeholder="Ajoutez ici le contenu qui servira de contexte à votre chatbot..."
         />
       </div>

@@ -40,7 +40,7 @@ export default async function ChatbotPage({
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="mb-6 flex justify-between items-center">
-        <Link href="/chatbots" className="text-blue-600 hover:text-blue-800">
+        <Link href="/chatbots" className="text-white hover:text-gray-400">
           ← Retour aux chatbots
         </Link>
         <DeleteChatbotButton id={chatbot.id} />
@@ -48,11 +48,11 @@ export default async function ChatbotPage({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div>
-          <div className="bg-card shadow-md rounded-lg p-6 mb-6 border border-gray-300">
+          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 mb-6 border border-gray-300">
             <h1 className="text-3xl font-bold mb-4 text-foreground">
               {chatbot.name}
             </h1>
-            <p className="text-gray-600 mb-6">{chatbot.description}</p>
+            <p className="text-foreground mb-6">{chatbot.description}</p>
             <div className="flex justify-between items-center text-sm text-gray-500">
               <span className="text-foreground">
                 Créé le {new Date(chatbot.createdAt).toLocaleDateString()}
@@ -63,7 +63,7 @@ export default async function ChatbotPage({
             </div>
           </div>
 
-          <div className="bg-card shadow-md rounded-lg p-6 border border-gray-300">
+          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Modifier le chatbot
             </h2>
@@ -78,7 +78,7 @@ export default async function ChatbotPage({
         </div>
 
         <div className="lg:col-span-2">
-          <div className="bg-card shadow-md rounded-lg p-6 border border-gray-300 ">
+          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300 ">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-foreground">Contextes</h2>
               <Button asChild variant="default">
@@ -88,7 +88,7 @@ export default async function ChatbotPage({
               </Button>
             </div>
             <div className="mb-4">
-              <p className="text-gray-600">
+              <p className="text-foreground">
                 Ajoutez du contenu pour entraîner votre chatbot. Plus vous
                 ajoutez de contexte, plus votre chatbot sera intelligent.
               </p>
@@ -97,15 +97,15 @@ export default async function ChatbotPage({
             <ContextList contexts={contexts} chatbotId={chatbot.id} />
           </div>
 
-          <div className="bg-card shadow-md rounded-lg p-6 mt-6 border border-gray-300">
+          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 mt-6 border border-gray-300">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Script d&apos;intégration
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-foreground mb-4">
               Utilisez ce script pour intégrer votre chatbot sur votre site web.
             </p>
             <div className="bg-gray-100 p-4 rounded-lg overflow-x-auto">
-              <pre className="text-sm text-foreground">
+              <pre className="text-sm text-black">
                 {`<script src="${
                   process.env.NEXT_PUBLIC_API_URL || ""
                 }/api/chatbots/script?id=${chatbot.id}"></script>

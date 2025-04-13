@@ -42,7 +42,7 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
             <h3 className="text-lg text-foreground font-medium mb-2">
               {context.title}
             </h3>
-            <p className="text-gray-600 mb-3 truncate">
+            <p className="text-foreground mb-3 truncate">
               {typeof context.content === "string"
                 ? context.content.substring(0, 100) + "..."
                 : ""}
@@ -51,7 +51,7 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
               <div className="space-x-2">
                 <Link
                   href={`/chatbots/${chatbotId}/contexts/${context.id}/edit`}
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-white hover:text-gray-400"
                 >
                   Modifier
                 </Link>

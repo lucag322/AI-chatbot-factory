@@ -57,7 +57,7 @@ export default function CopyScriptButton({ chatbotId }: CopyScriptButtonProps) {
         </pre>
       </div>
       <button
-        className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="mt-4 bg-white hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={copyToClipboard}
       >
         {copied ? "Copié !" : "Copier le script"}

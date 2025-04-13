@@ -31,7 +31,7 @@ export default async function NewContextPage({
       <div className="mb-6">
         <Link
           href={`/chatbots/${id}`}
-          className="text-blue-600 hover:text-blue-800"
+          className="text-white hover:text-gray-400"
         >
           ← Retour au chatbot
         </Link>
@@ -41,8 +41,8 @@ export default async function NewContextPage({
         Ajouter un contexte pour {chatbot.name}
       </h1>
 
-      <div className="bg-white shadow-md rounded-lg p-6 border border-gray-300">
-        <p className="text-gray-600 mb-6">
+      <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300">
+        <p className="text-foreground mb-6">
           Les contextes permettent à votre chatbot de comprendre et de répondre
           à des questions spécifiques. Ajoutez des informations pertinentes pour
           améliorer les performances de votre chatbot.
