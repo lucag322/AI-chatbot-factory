@@ -34,9 +34,14 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
   return (
     <div className="space-y-4">
       {contexts.map((context) => (
-        <div key={context.id} className="border rounded-lg overflow-hidden">
+        <div
+          key={context.id}
+          className="border border-gray-300 rounded-lg overflow-hidden"
+        >
           <div className="p-4">
-            <h3 className="text-lg font-medium mb-2">{context.title}</h3>
+            <h3 className="text-lg text-foreground font-medium mb-2">
+              {context.title}
+            </h3>
             <p className="text-gray-600 mb-3 truncate">
               {typeof context.content === "string"
                 ? context.content.substring(0, 100) + "..."
@@ -57,7 +62,7 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
                   Supprimer
                 </button>
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-foreground">
                 <DateDisplay date={context.createdAt} />
               </span>
             </div>

@@ -23,7 +23,7 @@ export default function ChatbotList({ chatbots }: ChatbotListProps) {
           </p>
           <Link
             href="/chatbots/new"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-2 px-4 rounded-md transition-colors"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 rounded-md transition-colors"
           >
             Créer votre premier chatbot
           </Link>
@@ -43,12 +43,12 @@ export default function ChatbotList({ chatbots }: ChatbotListProps) {
           <Card className="overflow-hidden rounded-md hover:shadow-md transition-shadow cursor-pointer h-full">
             <CardHeader>
               <CardTitle>{chatbot.name}</CardTitle>
-              <CardDescription>
+              <CardDescription className="text-card-foreground">
                 {chatbot.description || "Aucune description"}
               </CardDescription>
             </CardHeader>
             <CardFooter className="flex justify-end items-center pt-4">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-card-foreground">
                 Créé le {new Date(chatbot.createdAt).toLocaleDateString()}
               </span>
             </CardFooter>

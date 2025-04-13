@@ -44,79 +44,250 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 1.5rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --foreground: #262b48;
+  --card: oklch(0.98 0 0 / 0.7);
+  --card-foreground: #262b48; /* gris foncée */
+  --popover: oklch(1 0 0 / 0.8);
+  --popover-foreground: white;
+  --primary: #bdf26d; /* Mindaro */
+  --primary-foreground: oklch(0.2 0.05 240);
+  --secondary: #266d99; /* Wine Leaf */
+  --secondary-foreground: white;
+  --muted: oklch(0.97 0 0 / 0.5);
+  --muted-foreground: white;
+  --accent: #bdf26d; /* Mindaro */
+  --accent-foreground: oklch(0.2 0.05 240);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #266d99; /* Wine Leaf */
+  --chart-1: #bdf26d; /* Mindaro */
+  --chart-2: #266d99; /* Wine Leaf */
+  --chart-3: #2a3140; /* Gunmetal */
+  --chart-4: oklch(0.75 0.15 120);
+  --chart-5: oklch(0.35 0.1 240);
+  --sidebar: rgba(255, 255, 255, 0.08);
+  --sidebar-foreground: white;
+  --sidebar-primary: #bdf26d; /* Mindaro */
+  --sidebar-primary-foreground: oklch(0.2 0.05 240);
+  --sidebar-accent: #266d99; /* Wine Leaf */
+  --sidebar-accent-foreground: white;
+  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-ring: #266d99; /* Wine Leaf */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #2a3140; /* Gunmetal */
+  --foreground: white;
+  --card: rgba(42, 49, 64, 0.15);
+  --card-foreground: white;
+  --popover: rgba(42, 49, 64, 0.8);
+  --popover-foreground: white;
+  --primary: #bdf26d; /* Mindaro */
+  --primary-foreground: oklch(0.2 0.05 240);
+  --secondary: #266d99; /* Wine Leaf */
+  --secondary-foreground: white;
+  --muted: rgba(42, 49, 64, 0.5);
+  --muted-foreground: white;
+  --accent: #bdf26d; /* Mindaro */
+  --accent-foreground: oklch(0.2 0.05 240);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #266d99; /* Wine Leaf */
+  --chart-1: #bdf26d; /* Mindaro */
+  --chart-2: #266d99; /* Wine Leaf */
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar: rgba(31, 37, 49, 0.8);
+  --sidebar-foreground: white;
+  --sidebar-primary: #bdf26d; /* Mindaro */
+  --sidebar-primary-foreground: oklch(0.2 0.05 240);
+  --sidebar-accent: #266d99; /* Wine Leaf */
+  --sidebar-accent-foreground: white;
+  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-ring: #266d99; /* Wine Leaf */
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Tous les textes en blanc par défaut */
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Fond avec dégradé amélioré */
   body {
-    @apply bg-background text-foreground;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: radial-gradient(
+      circle at 30% 30%,
+      #bdf26d 0%,
+      #266d99 60%,
+      #2a3140 100%
+    );
+  }
+
+  /* Effet de grille dense comme dans l'image de référence */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 8px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    background-size: 8px 8px;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain et forme organique */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+      radial-gradient(
+        ellipse at 70% 60%,
+        rgba(42, 49, 64, 0.8) 0%,
+        rgba(42, 49, 64, 0) 70%
+      );
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Pour les contenus sur ce fond */
+  .content-wrapper {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    margin: 2rem;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Effet de grille sur les conteneurs */
+  .content-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 8px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    background-size: 8px 8px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Mode sombre avec moins de saturation */
+  .dark body {
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(189, 242, 109, 0.2) 0%,
+      rgba(38, 109, 153, 0.4) 60%,
+      #2a3140 100%
+    );
+  }
+
+  /* Animation de pulsation pour les éléments */
+  @keyframes pulse-glow {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 4s infinite ease-in-out;
+  }
+
+  /* Animation de scintillement pour les lignes de grille */
+  @keyframes grid-shimmer {
+    0% {
+      opacity: 0.5;
+    }
+    25% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    75% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+
+  .grid-shimmer::before {
+    animation: grid-shimmer 8s infinite ease-in-out;
   }
 }

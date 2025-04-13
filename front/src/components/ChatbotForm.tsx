@@ -66,7 +66,10 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       )}
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-foreground"
+        >
           Nom du chatbot
         </label>
         <input
@@ -80,7 +83,10 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-foreground"
+        >
           Description
         </label>
         <textarea

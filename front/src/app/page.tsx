@@ -20,13 +20,13 @@ export default function Home() {
       <div className="flex gap-4">
         <Link
           href="/chatbots"
-          className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-3 px-6 rounded-lg transition-colors"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 py-3 px-6 rounded-lg transition-colors"
         >
           Gérer mes chatbots
         </Link>
         <Link
           href="/chatbots/new"
-          className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold py-3 px-6 rounded-lg transition-colors"
+          className="bg-accent text-accent-foreground hover:bg-accent/90 py-3 px-6 rounded-lg transition-colors"
         >
           Créer un nouveau chatbot
         </Link>
