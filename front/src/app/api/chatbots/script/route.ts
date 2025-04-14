@@ -191,7 +191,7 @@ export async function GET(request: NextRequest) {
         border-radius: 10px;
         margin-bottom: 5px;
         align-self: flex-end;
-        background-color: #e9ecef;
+        background-color: #a5a5a5;
         word-break: break-word;
         font-family: Arial, sans-serif;
       }
@@ -202,7 +202,8 @@ export async function GET(request: NextRequest) {
         border-radius: 10px;
         margin-bottom: 5px;
         align-self: flex-start;
-        background-color: #f1f0fe;
+        border: 1px solid #5d5d5d;
+        color: #5d5d5d;
         word-break: break-word;
         font-family: Arial, sans-serif;
       }

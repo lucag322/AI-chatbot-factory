@@ -7,6 +7,7 @@ import ContextList from "@/components/ContextList";
 import CopyButton from "@/components/CopyButton";
 import DeleteChatbotButton from "@/components/DeleteChatbotButton";
 import { Button } from "@/components/ui/button";
+import ChatbotPreview from "@/components/ChatbotPreview";
 
 const prisma = new PrismaClient();
 const prismaAny = prisma as any;
@@ -25,17 +26,13 @@ interface ChatbotWithCustomization {
 
 export default async function ChatbotPage({
   params,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  // Résoudre la promesse des paramètres
   const resolvedParams = await params;
   const { id } = resolvedParams;
 
-  // Utilisation du type personnalisé pour le chatbot
   const chatbot = (await prisma.chatbot.findUnique({
     where: { id },
   })) as ChatbotWithCustomization;
@@ -44,7 +41,6 @@ export default async function ChatbotPage({
     notFound();
   }
 
-  // Récupérer les contextes séparément
   const contexts = await prismaAny.context.findMany({
     where: { chatbotId: id },
     orderBy: { createdAt: "desc" },
@@ -124,17 +120,24 @@ export default async function ChatbotPage({
               <pre className="text-sm text-black">
                 {`<script src="${
                   process.env.NEXT_PUBLIC_API_URL || ""
-                }/api/chatbots/script?id=${chatbot.id}"></script>
-        <div id="chatbot-container"></div>`}
+                }/api/chatbots/script?id=${chatbot.id}"></script>`}
               </pre>
             </div>
             <CopyButton
               scriptContent={`<script src="${
                 process.env.NEXT_PUBLIC_API_URL || ""
-              }/api/chatbots/script?id=${
-                chatbot.id
-              }"></script>\n<div id="chatbot-container"></div>`}
+              }/api/chatbots/script?id=${chatbot.id}"></script>`}
             />
+          </div>
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+            <h2 className="text-2xl font-bold mb-4 text-foreground">
+              Tester le chatbot
+            </h2>
+            <p className="text-foreground">
+              Vous pouvez tester votre chatbot directement ici avant de
+              l&apos;intégrer sur votre site.
+            </p>
+            <ChatbotPreview chatbotId={chatbot.id} />
           </div>
         </div>
       </div>
