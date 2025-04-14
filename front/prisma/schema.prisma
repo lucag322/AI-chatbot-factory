@@ -18,6 +18,9 @@ model Chatbot {
   updatedAt    DateTime @updatedAt
   contexts     Context[]
   apiKey       String   @unique @default(cuid())
+  color        String?  @default("#3b82f6") // Default blue color
+  windowWidth  Int?     @default(380)       // Default width in pixels
+  windowHeight Int?     @default(600)       // Default height in pixels
 }
 
    model Context {

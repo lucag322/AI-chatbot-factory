@@ -9,6 +9,9 @@ interface ChatbotFormProps {
     id?: string;
     name: string;
     description: string;
+    color?: string;
+    windowWidth?: number;
+    windowHeight?: number;
   };
 }
 
@@ -17,6 +20,13 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const [name, setName] = useState(initialData?.name || "");
   const [description, setDescription] = useState(
     initialData?.description || ""
+  );
+  const [color, setColor] = useState(initialData?.color || "#3b82f6");
+  const [windowWidth, setWindowWidth] = useState(
+    initialData?.windowWidth || 380
+  );
+  const [windowHeight, setWindowHeight] = useState(
+    initialData?.windowHeight || 600
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +50,13 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({
+          name,
+          description,
+          color,
+          windowWidth,
+          windowHeight,
+        }),
       });
 
       if (!response.ok) {
@@ -96,6 +112,63 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
           rows={4}
           className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
         />
+      </div>
+
+      <div>
+        <label
+          htmlFor="color"
+          className="block text-sm font-medium text-foreground"
+        >
+          Couleur du chatbot
+        </label>
+        <div className="flex items-center gap-4 mt-1">
+          <input
+            type="color"
+            id="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="h-10 w-10 border border-gray-300 rounded"
+          />
+          <span className="text-sm">{color}</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label
+            htmlFor="windowWidth"
+            className="block text-sm font-medium text-foreground"
+          >
+            Largeur (px)
+          </label>
+          <input
+            type="number"
+            id="windowWidth"
+            value={windowWidth}
+            onChange={(e) => setWindowWidth(parseInt(e.target.value))}
+            min="300"
+            max="600"
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="windowHeight"
+            className="block text-sm font-medium text-foreground"
+          >
+            Hauteur (px)
+          </label>
+          <input
+            type="number"
+            id="windowHeight"
+            value={windowHeight}
+            onChange={(e) => setWindowHeight(parseInt(e.target.value))}
+            min="400"
+            max="800"
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
+          />
+        </div>
       </div>
 
       <div>

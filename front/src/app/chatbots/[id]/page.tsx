@@ -11,6 +11,18 @@ import { Button } from "@/components/ui/button";
 const prisma = new PrismaClient();
 const prismaAny = prisma as any;
 
+interface ChatbotWithCustomization {
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  apiKey: string;
+  color?: string;
+  windowWidth?: number;
+  windowHeight?: number;
+}
+
 export default async function ChatbotPage({
   params,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,9 +35,10 @@ export default async function ChatbotPage({
   const resolvedParams = await params;
   const { id } = resolvedParams;
 
-  const chatbot = await prisma.chatbot.findUnique({
+  // Utilisation du type personnalisé pour le chatbot
+  const chatbot = (await prisma.chatbot.findUnique({
     where: { id },
-  });
+  })) as ChatbotWithCustomization;
 
   if (!chatbot) {
     notFound();
@@ -46,9 +59,9 @@ export default async function ChatbotPage({
         <DeleteChatbotButton id={chatbot.id} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div>
-          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 mb-6 border border-gray-300">
+      <div className="lg:grid lg:grid-cols-3 gap-6">
+        <div className="flex flex-col gap-6">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
             <h1 className="text-3xl font-bold mb-4 text-foreground">
               {chatbot.name}
             </h1>
@@ -63,7 +76,7 @@ export default async function ChatbotPage({
             </div>
           </div>
 
-          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Modifier le chatbot
             </h2>
@@ -72,13 +85,16 @@ export default async function ChatbotPage({
                 id: chatbot.id,
                 name: chatbot.name,
                 description: chatbot.description || "",
+                color: chatbot.color,
+                windowWidth: chatbot.windowWidth,
+                windowHeight: chatbot.windowHeight,
               }}
             />
           </div>
         </div>
 
-        <div className="lg:col-span-2">
-          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 border border-gray-300 ">
+        <div className="lg:col-span-2 flex flex-col gap-6">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-foreground">Contextes</h2>
               <Button asChild variant="default">
@@ -97,7 +113,7 @@ export default async function ChatbotPage({
             <ContextList contexts={contexts} chatbotId={chatbot.id} />
           </div>
 
-          <div className=" bg-card backdrop-blur-md  shadow-md rounded-lg p-6 mt-6 border border-gray-300">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Script d&apos;intégration
             </h2>
@@ -109,7 +125,7 @@ export default async function ChatbotPage({
                 {`<script src="${
                   process.env.NEXT_PUBLIC_API_URL || ""
                 }/api/chatbots/script?id=${chatbot.id}"></script>
-<div id="chatbot-container"></div>`}
+        <div id="chatbot-container"></div>`}
               </pre>
             </div>
             <CopyButton

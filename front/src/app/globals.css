@@ -148,6 +148,9 @@
       #266d99 60%,
       #2a3140 100%
     );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
   }
 
   /* Effet de grille dense comme dans l'image de référence */

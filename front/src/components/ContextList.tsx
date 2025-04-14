@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import DateDisplay from "./DateDisplay";
+import { Button } from "./ui/button";
+import { Trash2 } from "lucide-react";
 
 // Définir manuellement le type Context pour éviter les erreurs
 interface Context {
@@ -48,19 +50,23 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
                 : ""}
             </p>
             <div className="flex justify-between items-center">
-              <div className="space-x-2">
-                <Link
-                  href={`/chatbots/${chatbotId}/contexts/${context.id}/edit`}
-                  className="text-white hover:text-gray-400"
-                >
-                  Modifier
-                </Link>
-                <button
+              <div className="space-x-2 flex items-center">
+                <Button asChild variant="default" size="sm">
+                  <Link
+                    href={`/chatbots/${chatbotId}/contexts/${context.id}/edit`}
+                  >
+                    Modifier
+                  </Link>
+                </Button>
+                <Button
                   onClick={() => handleDelete(context.id)}
-                  className="text-red-600 hover:text-red-800"
+                  variant="destructive"
+                  size="sm"
+                  className="cursor-pointer"
                 >
+                  <Trash2 className="h-4 w-4 mr-2" />
                   Supprimer
-                </button>
+                </Button>
               </div>
               <span className="text-sm text-foreground">
                 <DateDisplay date={context.createdAt} />

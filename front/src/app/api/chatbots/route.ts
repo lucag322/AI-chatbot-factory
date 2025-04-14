@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, description } = body;
+    const { name, description, color, windowWidth, windowHeight } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -36,6 +36,9 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         description,
+        color,
+        windowWidth,
+        windowHeight,
       },
     });
 

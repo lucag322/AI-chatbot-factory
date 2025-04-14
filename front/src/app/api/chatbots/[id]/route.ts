@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
@@ -36,7 +35,7 @@ export async function PUT(request: NextRequest, { params }: any) {
   try {
     const { id } = params;
     const body = await request.json();
-    const { name, description } = body;
+    const { name, description, color, windowWidth, windowHeight } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -61,6 +60,9 @@ export async function PUT(request: NextRequest, { params }: any) {
       data: {
         name,
         description,
+        color,
+        windowWidth,
+        windowHeight,
       },
     });
 
@@ -134,7 +136,8 @@ export async function OPTIONS() {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+      "Access-Control-Allow-Headers":
+        "Content-Type, Authorization, X-Requested-With",
     },
   });
 }
