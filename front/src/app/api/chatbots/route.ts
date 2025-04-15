@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
     const {
       name,
       description,
+      welcomeMessage,
       color,
       windowWidth,
       windowHeight,
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         description,
+        welcomeMessage,
         color,
         windowWidth,
         windowHeight,

@@ -38,6 +38,7 @@ export async function PUT(request: NextRequest, { params }: any) {
     const {
       name,
       description,
+      welcomeMessage,
       color,
       windowWidth,
       windowHeight,
@@ -72,6 +73,7 @@ export async function PUT(request: NextRequest, { params }: any) {
       data: {
         name,
         description,
+        welcomeMessage,
         color,
         windowWidth,
         windowHeight,

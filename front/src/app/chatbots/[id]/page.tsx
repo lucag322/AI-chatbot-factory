@@ -30,6 +30,7 @@ interface ChatbotWithCustomization {
   botMessageTextColor?: string;
   botMessageBorderColor?: string;
   showBotMessageBorder?: boolean;
+  welcomeMessage?: string;
 }
 
 export default async function ChatbotPage({
@@ -86,8 +87,8 @@ export default async function ChatbotPage({
             </h2>
             <ChatbotForm
               initialData={{
-                id: chatbot.id, // Obligatoire pour le mode édition
-                name: chatbot.name, // Obligatoire
+                id: chatbot.id,
+                name: chatbot.name,
                 description: chatbot.description || "",
                 color: chatbot.color,
                 windowWidth: chatbot.windowWidth,
@@ -100,6 +101,7 @@ export default async function ChatbotPage({
                 botMessageTextColor: chatbot.botMessageTextColor,
                 botMessageBorderColor: chatbot.botMessageBorderColor,
                 showBotMessageBorder: chatbot.showBotMessageBorder,
+                welcomeMessage: chatbot.welcomeMessage,
               }}
             />
           </div>

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import StyleCustomizationModal from "./StyleCustomizationModal";
@@ -10,6 +11,7 @@ interface ChatbotFormProps {
     id?: string;
     name: string;
     description: string;
+    welcomeMessage?: string;
     color?: string;
     windowWidth?: number;
     windowHeight?: number;
@@ -21,7 +23,6 @@ interface ChatbotFormProps {
     botMessageTextColor?: string;
     botMessageBorderColor?: string;
     showBotMessageBorder?: boolean;
-    welcomeMessage?: string;
   };
 }
 
@@ -31,8 +32,6 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
-
-  // États pour les couleurs et dimensions
   const [color, setColor] = useState(initialData?.color || "#3b82f6");
   const [windowWidth, setWindowWidth] = useState(
     initialData?.windowWidth || 380
@@ -68,17 +67,13 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
     initialData?.welcomeMessage ||
       "Bonjour ! Comment puis-je vous aider aujourd'hui ?"
   );
-
-  useEffect(() => {
-    console.log("initialData :", initialData);
-  }, []);
-
+  const [dataUpdated, setDataUpdated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const isEditing = !!initialData?.id;
 
-  const handleStyleSave = (settings: {
+  const handleStyleSave = async (settings: {
     name: string;
     description: string;
     welcomeMessage: string;
@@ -108,14 +103,69 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
     setBotMessageTextColor(settings.botMessageTextColor);
     setBotMessageBorderColor(settings.botMessageBorderColor);
     setShowBotMessageBorder(settings.showBotMessageBorder);
+    setWelcomeMessage(settings.welcomeMessage);
+
+    if (isEditing) {
+      const formData = {
+        name: settings.name,
+        description: settings.description,
+        welcomeMessage: settings.welcomeMessage,
+        color: settings.mainColor,
+        windowWidth: settings.windowWidth,
+        windowHeight: settings.windowHeight,
+        userMessageBgColor: settings.userMessageBgColor,
+        userMessageTextColor: settings.userMessageTextColor,
+        userMessageBorderColor: settings.userMessageBorderColor,
+        showUserMessageBorder: settings.showUserMessageBorder,
+        botMessageBgColor: settings.botMessageBgColor,
+        botMessageTextColor: settings.botMessageTextColor,
+        botMessageBorderColor: settings.botMessageBorderColor,
+        showBotMessageBorder: settings.showBotMessageBorder,
+      };
+
+      await saveChanges(formData);
+      setDataUpdated(true);
+      setTimeout(() => setDataUpdated(false), 2000);
+    }
   };
 
+  const saveChanges = async (data: any) => {
+    try {
+      const url = isEditing
+        ? `/api/chatbots/${initialData.id}`
+        : "/api/chatbots";
+      const method = isEditing ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Une erreur est survenue lors de la sauvegarde");
+      }
+
+      // Forcer une actualisation de la page après la sauvegarde
+      if (isEditing) {
+        router.refresh(); // Ceci va actualisez ChatbotPreview car il sera rechargé avec la page
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Erreur de sauvegarde:", error);
+      return null;
+    }
+  };
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     const formData = {
       name,
       description,
+      welcomeMessage,
       color,
       windowWidth,
       windowHeight,
@@ -127,10 +177,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       botMessageTextColor,
       botMessageBorderColor,
       showBotMessageBorder,
-      welcomeMessage,
     };
-
-    console.log("Données envoyées :", formData);
 
     setIsSubmitting(true);
     setError("");
@@ -171,7 +218,12 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         </div>
       )}
 
-      {/* Section d'apparence */}
+      {dataUpdated && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          Les modifications ont été enregistrées.
+        </div>
+      )}
+
       <div className="pt-2">
         <div className="flex justify-between items-center mb-4">
           <h3 className="font-medium">Configuration du chatbot</h3>
@@ -194,10 +246,11 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
               showBotMessageBorder,
             }}
             onSave={handleStyleSave}
+            autoSave={isEditing}
+            chatbotId={initialData?.id}
           />
         </div>
 
-        {/* Aperçu des paramètres */}
         <div className="mt-4 p-3 border rounded-md">
           <div className="mb-4">
             <h4 className="text-sm font-medium mb-2">Informations</h4>
@@ -213,8 +266,8 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
           </div>
 
           <div className="mb-4">
-            <h4 className="text-sm font-medium mb-2">Message de bienvenue</h4>
-            <div className="p-2 bg-gray-100 rounded text-sm">
+            <h4 className="text-sm font-medium mb-">Message de bienvenue</h4>
+            <div className="p-2 bg-gray-100 rounded text-sm text-black">
               {welcomeMessage}
             </div>
           </div>
@@ -279,15 +332,13 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         </div>
       </div>
 
-      <div>
-        <Button type="submit" disabled={isSubmitting} variant="default">
-          {isSubmitting
-            ? "Sauvegarde en cours..."
-            : isEditing
-            ? "Mettre à jour"
-            : "Créer"}
-        </Button>
-      </div>
+      {!isEditing && (
+        <div>
+          <Button type="submit" disabled={isSubmitting} variant="default">
+            {isSubmitting ? "Sauvegarde en cours..." : "Créer"}
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

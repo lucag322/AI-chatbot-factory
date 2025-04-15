@@ -48,11 +48,15 @@ interface StyleCustomizationModalProps {
     botMessageBorderColor: string;
     showBotMessageBorder: boolean;
   }) => void;
+  autoSave?: boolean;
+  chatbotId?: string;
 }
 
 export default function StyleCustomizationModal({
   initialSettings,
   onSave,
+  autoSave = false,
+  chatbotId,
 }: StyleCustomizationModalProps) {
   const [name, setName] = useState(initialSettings.name || "");
   const [description, setDescription] = useState(
@@ -92,9 +96,12 @@ export default function StyleCustomizationModal({
     initialSettings.showBotMessageBorder
   );
   const [isOpen, setIsOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const handleSave = () => {
-    onSave({
+  const handleSave = async () => {
+    const settings = {
       name,
       description,
       welcomeMessage,
@@ -109,7 +116,51 @@ export default function StyleCustomizationModal({
       botMessageTextColor,
       botMessageBorderColor,
       showBotMessageBorder,
-    });
+    };
+
+    if (autoSave && chatbotId) {
+      setIsSaving(true);
+      setSaveError("");
+      setSaveSuccess(false);
+
+      try {
+        const response = await fetch(`/api/chatbots/${chatbotId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(settings),
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la sauvegarde des modifications");
+        }
+
+        // Forcer le rechargement de la prévisualisation
+        const chatbotElement = document.getElementById("chatbot-host");
+        if (chatbotElement) {
+          document.body.removeChild(chatbotElement);
+        }
+
+        // Ajouter un paramètre nocache pour éviter la mise en cache du script
+        const scriptElement = document.createElement("script");
+        scriptElement.src = `/api/chatbots/script?id=${chatbotId}&nocache=${Date.now()}`;
+        document.body.appendChild(scriptElement);
+
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 2000);
+      } catch (error) {
+        setSaveError(
+          error instanceof Error
+            ? error.message
+            : "Erreur lors de la sauvegarde"
+        );
+      } finally {
+        setIsSaving(false);
+      }
+    }
+
+    onSave(settings);
     setIsOpen(false);
   };
 
@@ -131,6 +182,18 @@ export default function StyleCustomizationModal({
             pour l&apos;adapter à votre site web.
           </AlertDialogDescription>
         </AlertDialogHeader>
+
+        {saveError && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {saveError}
+          </div>
+        )}
+
+        {saveSuccess && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            Les modifications ont été enregistrées avec succès.
+          </div>
+        )}
 
         <div className="py-4 space-y-6">
           {/* Information de base */}
@@ -439,6 +502,7 @@ export default function StyleCustomizationModal({
             </div>
           </div>
 
+          {/* Prévisualisation */}
           <div>
             <h3 className="font-medium mb-3 text-black">Prévisualisation</h3>
             <div className="p-4 border rounded-md bg-gray-50">
@@ -493,37 +557,24 @@ export default function StyleCustomizationModal({
                   </div>
                 </div>
               </div>
-
-              <div>
-                <h4 className="text-sm font-medium text-black mb-2">
-                  Apparence du widget
-                </h4>
-                <div className="flex space-x-4 items-center">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white"
-                    style={{ backgroundColor: mainColor }}
-                  >
-                    💬
-                  </div>
-                  <div
-                    className="h-10 flex items-center px-4 text-white rounded-md"
-                    style={{ backgroundColor: mainColor }}
-                  >
-                    {name || "Chatbot"}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
         <AlertDialogFooter>
-          <AlertDialogCancel className="text-black">Annuler</AlertDialogCancel>
+          <AlertDialogCancel className="text-black cursor-pointer">
+            Annuler
+          </AlertDialogCancel>
           <AlertDialogAction
-            className="bg-primary text-white"
+            className="bg-primary text-black cursor-pointer"
             onClick={handleSave}
+            disabled={isSaving}
           >
-            Enregistrer
+            {isSaving
+              ? "Enregistrement..."
+              : autoSave
+              ? "Enregistrer et appliquer"
+              : "Enregistrer"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -17,7 +17,11 @@ export default function CopyButton({ scriptContent }: CopyButtonProps) {
   };
 
   return (
-    <Button variant="default" className="mt-4" onClick={handleCopy}>
+    <Button
+      variant="default"
+      className="mt-4 cursor-pointer"
+      onClick={handleCopy}
+    >
       {copied ? "Copié !" : "Copier le script"}
     </Button>
   );
