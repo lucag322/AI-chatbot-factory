@@ -23,7 +23,19 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, description, color, windowWidth, windowHeight } = body;
+    const {
+      name,
+      description,
+      color,
+      windowWidth,
+      windowHeight,
+      userMessageBgColor,
+      userMessageTextColor,
+      botMessageBgColor,
+      botMessageTextColor,
+      botMessageBorderColor,
+      showBotMessageBorder,
+    } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -39,6 +51,12 @@ export async function POST(request: NextRequest) {
         color,
         windowWidth,
         windowHeight,
+        userMessageBgColor,
+        userMessageTextColor,
+        botMessageBgColor,
+        botMessageTextColor,
+        botMessageBorderColor,
+        showBotMessageBorder,
       },
     });
 

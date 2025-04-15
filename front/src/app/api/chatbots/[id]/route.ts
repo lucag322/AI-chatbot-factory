@@ -35,7 +35,19 @@ export async function PUT(request: NextRequest, { params }: any) {
   try {
     const { id } = params;
     const body = await request.json();
-    const { name, description, color, windowWidth, windowHeight } = body;
+    const {
+      name,
+      description,
+      color,
+      windowWidth,
+      windowHeight,
+      userMessageBgColor,
+      userMessageTextColor,
+      botMessageBgColor,
+      botMessageTextColor,
+      botMessageBorderColor,
+      showBotMessageBorder,
+    } = body;
 
     if (!name) {
       return NextResponse.json(
@@ -63,6 +75,12 @@ export async function PUT(request: NextRequest, { params }: any) {
         color,
         windowWidth,
         windowHeight,
+        userMessageBgColor,
+        userMessageTextColor,
+        botMessageBgColor,
+        botMessageTextColor,
+        botMessageBorderColor,
+        showBotMessageBorder,
       },
     });
 

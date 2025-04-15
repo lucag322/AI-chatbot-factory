@@ -22,6 +22,14 @@ interface ChatbotWithCustomization {
   color?: string;
   windowWidth?: number;
   windowHeight?: number;
+  userMessageBgColor?: string;
+  userMessageTextColor?: string;
+  userMessageBorderColor?: string;
+  showUserMessageBorder?: boolean;
+  botMessageBgColor?: string;
+  botMessageTextColor?: string;
+  botMessageBorderColor?: string;
+  showBotMessageBorder?: boolean;
 }
 
 export default async function ChatbotPage({
@@ -78,12 +86,20 @@ export default async function ChatbotPage({
             </h2>
             <ChatbotForm
               initialData={{
-                id: chatbot.id,
-                name: chatbot.name,
+                id: chatbot.id, // Obligatoire pour le mode édition
+                name: chatbot.name, // Obligatoire
                 description: chatbot.description || "",
                 color: chatbot.color,
                 windowWidth: chatbot.windowWidth,
                 windowHeight: chatbot.windowHeight,
+                userMessageBgColor: chatbot.userMessageBgColor,
+                userMessageTextColor: chatbot.userMessageTextColor,
+                userMessageBorderColor: chatbot.userMessageBorderColor,
+                showUserMessageBorder: chatbot.showUserMessageBorder,
+                botMessageBgColor: chatbot.botMessageBgColor,
+                botMessageTextColor: chatbot.botMessageTextColor,
+                botMessageBorderColor: chatbot.botMessageBorderColor,
+                showBotMessageBorder: chatbot.showBotMessageBorder,
               }}
             />
           </div>

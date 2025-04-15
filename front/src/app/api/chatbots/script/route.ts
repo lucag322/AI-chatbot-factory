@@ -15,6 +15,14 @@ interface ChatbotWithCustomization {
   color?: string;
   windowWidth?: number;
   windowHeight?: number;
+  userMessageBgColor?: string;
+  userMessageTextColor?: string;
+  botMessageBgColor?: string;
+  botMessageTextColor?: string;
+  botMessageBorderColor?: string;
+  showBotMessageBorder?: boolean;
+  userMessageBorderColor?: string;
+  showUserMessageBorder?: boolean;
 }
 
 export async function GET(request: NextRequest) {
@@ -40,6 +48,17 @@ export async function GET(request: NextRequest) {
     const chatbotColor = chatbot.color || "#4f46e5";
     const chatbotWidth = chatbot.windowWidth || 350;
     const chatbotHeight = chatbot.windowHeight || 500;
+
+    // Nouvelles propriétés pour la personnalisation des couleurs des messages
+    const userMessageBgColor = chatbot.userMessageBgColor || "#a5a5a5";
+    const userMessageTextColor = chatbot.userMessageTextColor || "#ffffff";
+    const userMessageBorderColor = chatbot.userMessageBorderColor || "#a5a5a5";
+    const showUserMessageBorder = chatbot.showUserMessageBorder === true;
+
+    const botMessageBgColor = chatbot.botMessageBgColor || "#ffffff";
+    const botMessageTextColor = chatbot.botMessageTextColor || "#5d5d5d";
+    const botMessageBorderColor = chatbot.botMessageBorderColor || "#5d5d5d";
+    const showBotMessageBorder = chatbot.showBotMessageBorder !== false;
 
     const script = `
 (function() {
@@ -191,7 +210,11 @@ export async function GET(request: NextRequest) {
         border-radius: 10px;
         margin-bottom: 5px;
         align-self: flex-end;
-        background-color: #a5a5a5;
+        background-color: ${userMessageBgColor};
+        border: ${
+          showUserMessageBorder ? `1px solid ${userMessageBorderColor}` : "none"
+        };
+        color: ${userMessageTextColor};
         word-break: break-word;
         font-family: Arial, sans-serif;
       }
@@ -202,8 +225,11 @@ export async function GET(request: NextRequest) {
         border-radius: 10px;
         margin-bottom: 5px;
         align-self: flex-start;
-        border: 1px solid #5d5d5d;
-        color: #5d5d5d;
+        background-color: ${botMessageBgColor};
+        border: ${
+          showBotMessageBorder ? `1px solid ${botMessageBorderColor}` : "none"
+        };
+        color: ${botMessageTextColor};
         word-break: break-word;
         font-family: Arial, sans-serif;
       }

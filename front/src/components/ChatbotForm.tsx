@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import StyleCustomizationModal from "./StyleCustomizationModal";
 
 interface ChatbotFormProps {
   initialData?: {
@@ -12,6 +13,14 @@ interface ChatbotFormProps {
     color?: string;
     windowWidth?: number;
     windowHeight?: number;
+    userMessageBgColor?: string;
+    userMessageTextColor?: string;
+    userMessageBorderColor?: string;
+    showUserMessageBorder?: boolean;
+    botMessageBgColor?: string;
+    botMessageTextColor?: string;
+    botMessageBorderColor?: string;
+    showBotMessageBorder?: boolean;
   };
 }
 
@@ -21,6 +30,8 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const [description, setDescription] = useState(
     initialData?.description || ""
   );
+
+  // États pour les couleurs et dimensions
   const [color, setColor] = useState(initialData?.color || "#3b82f6");
   const [windowWidth, setWindowWidth] = useState(
     initialData?.windowWidth || 380
@@ -28,13 +39,87 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const [windowHeight, setWindowHeight] = useState(
     initialData?.windowHeight || 600
   );
+  const [userMessageBgColor, setUserMessageBgColor] = useState(
+    initialData?.userMessageBgColor || "#a5a5a5"
+  );
+  const [userMessageTextColor, setUserMessageTextColor] = useState(
+    initialData?.userMessageTextColor || "#ffffff"
+  );
+  const [userMessageBorderColor, setUserMessageBorderColor] = useState(
+    initialData?.userMessageBorderColor || "#a5a5a5"
+  );
+  const [showUserMessageBorder, setShowUserMessageBorder] = useState(
+    initialData?.showUserMessageBorder === true
+  );
+  const [botMessageBgColor, setBotMessageBgColor] = useState(
+    initialData?.botMessageBgColor || "#ffffff"
+  );
+  const [botMessageTextColor, setBotMessageTextColor] = useState(
+    initialData?.botMessageTextColor || "#5d5d5d"
+  );
+  const [botMessageBorderColor, setBotMessageBorderColor] = useState(
+    initialData?.botMessageBorderColor || "#5d5d5d"
+  );
+  const [showBotMessageBorder, setShowBotMessageBorder] = useState(
+    initialData?.showBotMessageBorder !== false
+  );
+
+  useEffect(() => {
+    console.log("initialData :", initialData);
+  }, []);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const isEditing = !!initialData?.id;
 
+  const handleStyleSave = (settings: {
+    mainColor: string;
+    windowWidth: number;
+    windowHeight: number;
+    userMessageBgColor: string;
+    userMessageTextColor: string;
+    userMessageBorderColor: string;
+    showUserMessageBorder: boolean;
+    botMessageBgColor: string;
+    botMessageTextColor: string;
+    botMessageBorderColor: string;
+    showBotMessageBorder: boolean;
+  }) => {
+    setColor(settings.mainColor);
+    setWindowWidth(settings.windowWidth);
+    setWindowHeight(settings.windowHeight);
+    setUserMessageBgColor(settings.userMessageBgColor);
+    setUserMessageTextColor(settings.userMessageTextColor);
+    setUserMessageBorderColor(settings.userMessageBorderColor);
+    setShowUserMessageBorder(settings.showUserMessageBorder);
+    setBotMessageBgColor(settings.botMessageBgColor);
+    setBotMessageTextColor(settings.botMessageTextColor);
+    setBotMessageBorderColor(settings.botMessageBorderColor);
+    setShowBotMessageBorder(settings.showBotMessageBorder);
+  };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const formData = {
+      name,
+      description,
+      color,
+      windowWidth,
+      windowHeight,
+      userMessageBgColor,
+      userMessageTextColor,
+      userMessageBorderColor,
+      showUserMessageBorder,
+      botMessageBgColor,
+      botMessageTextColor,
+      botMessageBorderColor,
+      showBotMessageBorder,
+    };
+
+    console.log("Données envoyées :", formData);
+
     setIsSubmitting(true);
     setError("");
 
@@ -42,7 +127,6 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       const url = isEditing
         ? `/api/chatbots/${initialData.id}`
         : "/api/chatbots";
-
       const method = isEditing ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -50,13 +134,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          description,
-          color,
-          windowWidth,
-          windowHeight,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -114,60 +192,86 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         />
       </div>
 
-      <div>
-        <label
-          htmlFor="color"
-          className="block text-sm font-medium text-foreground"
-        >
-          Couleur du chatbot
-        </label>
-        <div className="flex items-center gap-4 mt-1">
-          <input
-            type="color"
-            id="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="h-10 w-10 border border-gray-300 rounded"
-          />
-          <span className="text-sm">{color}</span>
-        </div>
-      </div>
+      {/* Section d'apparence */}
+      <div className="border-t pt-4">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-medium">Apparence du chatbot</h3>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="windowWidth"
-            className="block text-sm font-medium text-foreground"
-          >
-            Largeur (px)
-          </label>
-          <input
-            type="number"
-            id="windowWidth"
-            value={windowWidth}
-            onChange={(e) => setWindowWidth(parseInt(e.target.value))}
-            min="300"
-            max="600"
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
+          <StyleCustomizationModal
+            initialSettings={{
+              mainColor: color,
+              windowWidth,
+              windowHeight,
+              userMessageBgColor,
+              userMessageTextColor,
+              userMessageBorderColor,
+              showUserMessageBorder,
+              botMessageBgColor,
+              botMessageTextColor,
+              botMessageBorderColor,
+              showBotMessageBorder,
+            }}
+            onSave={handleStyleSave}
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="windowHeight"
-            className="block text-sm font-medium text-foreground"
-          >
-            Hauteur (px)
-          </label>
-          <input
-            type="number"
-            id="windowHeight"
-            value={windowHeight}
-            onChange={(e) => setWindowHeight(parseInt(e.target.value))}
-            min="400"
-            max="800"
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
-          />
+        {/* Aperçu des paramètres */}
+        <div className="mt-4 p-3 border rounded-md grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <h4 className="text-sm font-medium mb-2">Couleurs</h4>
+            <div className="flex space-x-2 items-center">
+              <div
+                className="h-8 w-8 rounded-md"
+                style={{ backgroundColor: color }}
+                title="Couleur principale"
+              ></div>
+              <div
+                className="h-8 w-8 rounded-md"
+                style={{
+                  backgroundColor: userMessageBgColor,
+                  color: userMessageTextColor,
+                  border: showUserMessageBorder
+                    ? `1px solid ${userMessageBorderColor}`
+                    : "none",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: "10px",
+                  lineHeight: "28px",
+                }}
+                title="Message utilisateur"
+              >
+                U
+              </div>
+              <div
+                className="h-8 w-8 rounded-md flex items-center justify-center"
+                style={{
+                  backgroundColor: botMessageBgColor,
+                  color: botMessageTextColor,
+                  border: showBotMessageBorder
+                    ? `1px solid ${botMessageBorderColor}`
+                    : "none",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: "10px",
+                }}
+                title="Message bot"
+              >
+                B
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-medium mb-2">Dimensions</h4>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="text-sm">
+                <span className="font-medium">Largeur:</span> {windowWidth}px
+              </div>
+              <div className="text-sm">
+                <span className="font-medium">Hauteur:</span> {windowHeight}px
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

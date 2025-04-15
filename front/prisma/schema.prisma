@@ -11,16 +11,24 @@ datasource db {
 }
 
 model Chatbot {
-  id           String   @id @default(cuid())
-  name         String
-  description  String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  contexts     Context[]
-  apiKey       String   @unique @default(cuid())
-  color        String?  @default("#3b82f6") // Default blue color
-  windowWidth  Int?     @default(380)       // Default width in pixels
-  windowHeight Int?     @default(600)       // Default height in pixels
+  id                  String   @id @default(cuid())
+  name                String
+  description         String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  contexts            Context[]
+  apiKey              String   @unique @default(cuid())
+  color               String?  @default("#3b82f6") // Default blue color
+  windowWidth         Int?     @default(380)       // Default width in pixels
+  windowHeight        Int?     @default(600)       // Default height in pixels
+  userMessageBgColor  String?  @default("#a5a5a5") // Default user message bg color
+  userMessageTextColor String? @default("#ffffff") // Default user message text color
+  botMessageBgColor   String?  @default("#ffffff") // Default bot message bg color
+  botMessageTextColor String?  @default("#5d5d5d") // Default bot message text color
+  botMessageBorderColor String? @default("#5d5d5d") // Default bot message border color
+  showBotMessageBorder Boolean? @default(true)     // Whether to show bot message border
+  userMessageBorderColor String? @default("#a5a5a5") // Default user message border
+  showUserMessageBorder Boolean? @default(false) 
 }
 
    model Context {
