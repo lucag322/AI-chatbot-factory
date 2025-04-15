@@ -69,14 +69,16 @@ export default function DeleteChatbotButton({ id }: DeleteChatbotButtonProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Êtes-vous absolument sûr ?</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle className="text-black">
+            Êtes-vous absolument sûr ?
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-black">
             Cette action ne peut pas être annulée. Cela supprimera
             définitivement votre chatbot et tous ses contextes.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel className="text-black">Annuler</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isDeleting}
