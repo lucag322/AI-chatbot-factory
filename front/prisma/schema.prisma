@@ -28,7 +28,8 @@ model Chatbot {
   botMessageBorderColor String? @default("#5d5d5d") // Default bot message border color
   showBotMessageBorder Boolean? @default(true)     // Whether to show bot message border
   userMessageBorderColor String? @default("#a5a5a5") // Default user message border
-  showUserMessageBorder Boolean? @default(false) 
+  showUserMessageBorder Boolean? @default(false)
+  welcomeMessage      String?  @default("Bonjour ! Comment puis-je vous aider aujourd'hui ?") // Message de bienvenue
 }
 
    model Context {

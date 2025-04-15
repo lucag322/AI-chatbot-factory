@@ -17,6 +17,9 @@ import { Settings } from "lucide-react";
 
 interface StyleCustomizationModalProps {
   initialSettings: {
+    name: string;
+    description: string;
+    welcomeMessage: string;
     mainColor: string;
     windowWidth: number;
     windowHeight: number;
@@ -30,6 +33,9 @@ interface StyleCustomizationModalProps {
     showBotMessageBorder: boolean;
   };
   onSave: (settings: {
+    name: string;
+    description: string;
+    welcomeMessage: string;
     mainColor: string;
     windowWidth: number;
     windowHeight: number;
@@ -48,6 +54,14 @@ export default function StyleCustomizationModal({
   initialSettings,
   onSave,
 }: StyleCustomizationModalProps) {
+  const [name, setName] = useState(initialSettings.name || "");
+  const [description, setDescription] = useState(
+    initialSettings.description || ""
+  );
+  const [welcomeMessage, setWelcomeMessage] = useState(
+    initialSettings.welcomeMessage ||
+      "Bonjour ! Comment puis-je vous aider aujourd'hui ?"
+  );
   const [mainColor, setMainColor] = useState(initialSettings.mainColor);
   const [windowWidth, setWindowWidth] = useState(initialSettings.windowWidth);
   const [windowHeight, setWindowHeight] = useState(
@@ -81,6 +95,9 @@ export default function StyleCustomizationModal({
 
   const handleSave = () => {
     onSave({
+      name,
+      description,
+      welcomeMessage,
       mainColor,
       windowWidth,
       windowHeight,
@@ -101,21 +118,78 @@ export default function StyleCustomizationModal({
       <AlertDialogTrigger asChild>
         <Button className="flex items-center gap-2 cursor-pointer">
           <Settings size={16} />
-          Personnaliser l&apos;apparence
+          Personnaliser le chatbot
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-black">
-            Personnalisation de l&apos;apparence
+            Personnalisation du chatbot
           </AlertDialogTitle>
           <AlertDialogDescription className="text-black">
-            Personnalisez les couleurs et dimensions de votre chatbot pour
-            l&apos;adapter à votre site web.
+            Personnalisez les informations et l&apos;apparence de votre chatbot
+            pour l&apos;adapter à votre site web.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="py-4 space-y-6">
+          {/* Information de base */}
+          <div>
+            <h3 className="font-medium mb-3 text-black">
+              Informations de base
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-black"
+                >
+                  Nom du chatbot
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-black"
+                >
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={3}
+                  className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="welcomeMessage"
+                  className="block text-sm font-medium text-black"
+                >
+                  Message de bienvenue
+                </label>
+                <textarea
+                  id="welcomeMessage"
+                  value={welcomeMessage}
+                  onChange={(e) => setWelcomeMessage(e.target.value)}
+                  rows={2}
+                  className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-black"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Couleur principale du chatbot */}
           <div>
             <h3 className="font-medium mb-3 text-black">Couleur principale</h3>
@@ -365,26 +439,15 @@ export default function StyleCustomizationModal({
             </div>
           </div>
 
-          {/* Prévisualisation */}
           <div>
             <h3 className="font-medium mb-3 text-black">Prévisualisation</h3>
             <div className="p-4 border rounded-md bg-gray-50">
-              <div className="flex flex-col space-y-3">
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-black mb-2">
+                  Message de bienvenue
+                </h4>
                 <div
-                  className="max-w-[70%] p-3 rounded-lg self-end"
-                  style={{
-                    backgroundColor: userMessageBgColor,
-                    color: userMessageTextColor,
-                    border: showUserMessageBorder
-                      ? `1px solid ${userMessageBorderColor}`
-                      : "none",
-                  }}
-                >
-                  Bonjour, comment puis-je vous aider ?
-                </div>
-
-                <div
-                  className="max-w-[70%] p-3 rounded-lg self-start"
+                  className="p-3 rounded-md max-w-[80%] text-sm"
                   style={{
                     backgroundColor: botMessageBgColor,
                     color: botMessageTextColor,
@@ -393,8 +456,61 @@ export default function StyleCustomizationModal({
                       : "none",
                   }}
                 >
-                  Je suis votre assistant virtuel. Comment puis-je vous aider
-                  aujourd&apos;hui ?
+                  {welcomeMessage}
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-black mb-2">
+                  Simulation d&apos;une conversation
+                </h4>
+                <div className="space-y-2">
+                  <div
+                    className="p-3 rounded-md max-w-[80%] text-sm ml-auto"
+                    style={{
+                      backgroundColor: userMessageBgColor,
+                      color: userMessageTextColor,
+                      border: showUserMessageBorder
+                        ? `1px solid ${userMessageBorderColor}`
+                        : "none",
+                    }}
+                  >
+                    Bonjour, pouvez-vous m&apos;aider ?
+                  </div>
+
+                  <div
+                    className="p-3 rounded-md max-w-[80%] text-sm"
+                    style={{
+                      backgroundColor: botMessageBgColor,
+                      color: botMessageTextColor,
+                      border: showBotMessageBorder
+                        ? `1px solid ${botMessageBorderColor}`
+                        : "none",
+                    }}
+                  >
+                    Bien sûr, je suis là pour vous aider. Que puis-je faire pour
+                    vous ?
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium text-black mb-2">
+                  Apparence du widget
+                </h4>
+                <div className="flex space-x-4 items-center">
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center text-white"
+                    style={{ backgroundColor: mainColor }}
+                  >
+                    💬
+                  </div>
+                  <div
+                    className="h-10 flex items-center px-4 text-white rounded-md"
+                    style={{ backgroundColor: mainColor }}
+                  >
+                    {name || "Chatbot"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -403,8 +519,11 @@ export default function StyleCustomizationModal({
 
         <AlertDialogFooter>
           <AlertDialogCancel className="text-black">Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSave} className="text-black">
-            Appliquer
+          <AlertDialogAction
+            className="bg-primary text-white"
+            onClick={handleSave}
+          >
+            Enregistrer
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

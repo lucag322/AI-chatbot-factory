@@ -23,6 +23,7 @@ interface ChatbotWithCustomization {
   showBotMessageBorder?: boolean;
   userMessageBorderColor?: string;
   showUserMessageBorder?: boolean;
+  welcomeMessage?: string; // Nouvelle propriété pour le message de bienvenue
 }
 
 export async function GET(request: NextRequest) {
@@ -59,6 +60,11 @@ export async function GET(request: NextRequest) {
     const botMessageTextColor = chatbot.botMessageTextColor || "#5d5d5d";
     const botMessageBorderColor = chatbot.botMessageBorderColor || "#5d5d5d";
     const showBotMessageBorder = chatbot.showBotMessageBorder !== false;
+
+    // Message de bienvenue personnalisé
+    const welcomeMessage =
+      chatbot.welcomeMessage ||
+      "Bonjour ! Comment puis-je vous aider aujourd'hui ?";
 
     const script = `
 (function() {
@@ -328,10 +334,10 @@ export async function GET(request: NextRequest) {
     
     shadow.appendChild(chatbotContainer);
 
-    // Ajouter le message de bienvenue
+    // Ajouter le message de bienvenue personnalisé
     const welcomeMessage = document.createElement('div');
     welcomeMessage.className = 'bot-message';
-    welcomeMessage.textContent = "Bonjour ! Comment puis-je vous aider aujourd'hui ?";
+    welcomeMessage.textContent = "${welcomeMessage.replace(/"/g, '\\"')}";
     chatbotMessages.appendChild(welcomeMessage);
 
     // Gestionnaires d'événements

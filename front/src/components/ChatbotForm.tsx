@@ -21,6 +21,7 @@ interface ChatbotFormProps {
     botMessageTextColor?: string;
     botMessageBorderColor?: string;
     showBotMessageBorder?: boolean;
+    welcomeMessage?: string;
   };
 }
 
@@ -63,6 +64,10 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const [showBotMessageBorder, setShowBotMessageBorder] = useState(
     initialData?.showBotMessageBorder !== false
   );
+  const [welcomeMessage, setWelcomeMessage] = useState(
+    initialData?.welcomeMessage ||
+      "Bonjour ! Comment puis-je vous aider aujourd'hui ?"
+  );
 
   useEffect(() => {
     console.log("initialData :", initialData);
@@ -74,6 +79,9 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
   const isEditing = !!initialData?.id;
 
   const handleStyleSave = (settings: {
+    name: string;
+    description: string;
+    welcomeMessage: string;
     mainColor: string;
     windowWidth: number;
     windowHeight: number;
@@ -86,6 +94,9 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
     botMessageBorderColor: string;
     showBotMessageBorder: boolean;
   }) => {
+    setName(settings.name);
+    setDescription(settings.description);
+    setWelcomeMessage(settings.welcomeMessage);
     setColor(settings.mainColor);
     setWindowWidth(settings.windowWidth);
     setWindowHeight(settings.windowHeight);
@@ -116,6 +127,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       botMessageTextColor,
       botMessageBorderColor,
       showBotMessageBorder,
+      welcomeMessage,
     };
 
     console.log("Données envoyées :", formData);
@@ -159,46 +171,16 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         </div>
       )}
 
-      <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-foreground"
-        >
-          Nom du chatbot
-        </label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-foreground"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={4}
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 text-foreground"
-        />
-      </div>
-
       {/* Section d'apparence */}
-      <div className="border-t pt-4">
+      <div className="pt-2">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-medium">Apparence du chatbot</h3>
+          <h3 className="font-medium">Configuration du chatbot</h3>
 
           <StyleCustomizationModal
             initialSettings={{
+              name,
+              description,
+              welcomeMessage,
               mainColor: color,
               windowWidth,
               windowHeight,
@@ -216,59 +198,81 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         </div>
 
         {/* Aperçu des paramètres */}
-        <div className="mt-4 p-3 border rounded-md grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div>
-            <h4 className="text-sm font-medium mb-2">Couleurs</h4>
-            <div className="flex space-x-2 items-center">
-              <div
-                className="h-8 w-8 rounded-md"
-                style={{ backgroundColor: color }}
-                title="Couleur principale"
-              ></div>
-              <div
-                className="h-8 w-8 rounded-md"
-                style={{
-                  backgroundColor: userMessageBgColor,
-                  color: userMessageTextColor,
-                  border: showUserMessageBorder
-                    ? `1px solid ${userMessageBorderColor}`
-                    : "none",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  fontSize: "10px",
-                  lineHeight: "28px",
-                }}
-                title="Message utilisateur"
-              >
-                U
+        <div className="mt-4 p-3 border rounded-md">
+          <div className="mb-4">
+            <h4 className="text-sm font-medium mb-2">Informations</h4>
+            <div className="text-sm mb-2">
+              <div>
+                <strong>Nom:</strong> {name}
               </div>
-              <div
-                className="h-8 w-8 rounded-md flex items-center justify-center"
-                style={{
-                  backgroundColor: botMessageBgColor,
-                  color: botMessageTextColor,
-                  border: showBotMessageBorder
-                    ? `1px solid ${botMessageBorderColor}`
-                    : "none",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  fontSize: "10px",
-                }}
-                title="Message bot"
-              >
-                B
+              <div>
+                <strong>Description:</strong>{" "}
+                {description || "Aucune description"}
               </div>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-sm font-medium mb-2">Dimensions</h4>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="text-sm">
-                <span className="font-medium">Largeur:</span> {windowWidth}px
+          <div className="mb-4">
+            <h4 className="text-sm font-medium mb-2">Message de bienvenue</h4>
+            <div className="p-2 bg-gray-100 rounded text-sm">
+              {welcomeMessage}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <h4 className="text-sm font-medium mb-2">Couleurs</h4>
+              <div className="flex space-x-2 items-center">
+                <div
+                  className="h-8 w-8 rounded-md"
+                  style={{ backgroundColor: color }}
+                  title="Couleur principale"
+                ></div>
+                <div
+                  className="h-8 w-8 rounded-md"
+                  style={{
+                    backgroundColor: userMessageBgColor,
+                    color: userMessageTextColor,
+                    border: showUserMessageBorder
+                      ? `1px solid ${userMessageBorderColor}`
+                      : "none",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    fontSize: "10px",
+                    lineHeight: "28px",
+                  }}
+                  title="Message utilisateur"
+                >
+                  U
+                </div>
+                <div
+                  className="h-8 w-8 rounded-md flex items-center justify-center"
+                  style={{
+                    backgroundColor: botMessageBgColor,
+                    color: botMessageTextColor,
+                    border: showBotMessageBorder
+                      ? `1px solid ${botMessageBorderColor}`
+                      : "none",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    fontSize: "10px",
+                  }}
+                  title="Message bot"
+                >
+                  B
+                </div>
               </div>
-              <div className="text-sm">
-                <span className="font-medium">Hauteur:</span> {windowHeight}px
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium mb-2">Dimensions</h4>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="text-sm">
+                  <span className="font-medium">Largeur:</span> {windowWidth}px
+                </div>
+                <div className="text-sm">
+                  <span className="font-medium">Hauteur:</span> {windowHeight}px
+                </div>
               </div>
             </div>
           </div>
