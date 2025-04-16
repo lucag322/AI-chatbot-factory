@@ -126,7 +126,6 @@
   h5,
   h6,
   p,
-  span,
   a,
   button,
   input,
@@ -142,18 +141,12 @@
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
-    background: radial-gradient(
-      circle at 30% 30%,
-      #6b8e37 0%,
-      #266d99 60%,
-      #2a3140 100%
-    );
+    background: #010522;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
   }
 
-  /* Effet de grille dense comme dans l'image de référence */
   body::before {
     content: "";
     position: fixed;
@@ -161,44 +154,18 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: repeating-linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.05) 0px,
-        rgba(255, 255, 255, 0.05) 1px,
-        transparent 1px,
-        transparent 8px
-      ),
-      repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.05) 0px,
-        rgba(255, 255, 255, 0.05) 1px,
-        transparent 1px,
-        transparent 8px
-      );
-    background-size: 8px 8px;
-    opacity: 0.8;
+    background-image: 
+    /* Lignes verticales pour les 12 colonnes */ repeating-linear-gradient(
+      to right,
+      transparent calc((100% / 12) - 1px),
+      rgba(255, 255, 255, 0.07) calc((100% / 12) - 1px),
+      rgba(255, 255, 255, 0.07) calc(100% / 12),
+      transparent calc(100% / 12)
+    );
+    opacity: 0.9;
     pointer-events: none;
     z-index: 0;
-  }
-
-  /* Grain et forme organique */
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
-      radial-gradient(
-        ellipse at 70% 60%,
-        rgba(42, 49, 64, 0.8) 0%,
-        rgba(42, 49, 64, 0) 70%
-      );
-    opacity: 0.3;
     mix-blend-mode: overlay;
-    pointer-events: none;
-    z-index: 0;
   }
 
   /* Pour les contenus sur ce fond */

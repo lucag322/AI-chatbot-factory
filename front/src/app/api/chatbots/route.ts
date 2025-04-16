@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// GET /api/chatbots - Récupérer tous les chatbots
 export async function GET() {
   try {
     const chatbots = await prisma.chatbot.findMany({
@@ -19,7 +18,6 @@ export async function GET() {
   }
 }
 
-// POST /api/chatbots - Créer un nouveau chatbot
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -32,6 +30,8 @@ export async function POST(request: NextRequest) {
       windowHeight,
       userMessageBgColor,
       userMessageTextColor,
+      userMessageBorderColor,
+      showUserMessageBorder,
       botMessageBgColor,
       botMessageTextColor,
       botMessageBorderColor,
@@ -55,6 +55,8 @@ export async function POST(request: NextRequest) {
         windowHeight,
         userMessageBgColor,
         userMessageTextColor,
+        userMessageBorderColor,
+        showUserMessageBorder,
         botMessageBgColor,
         botMessageTextColor,
         botMessageBorderColor,

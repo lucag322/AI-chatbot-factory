@@ -13,4 +13,4 @@ services:
       - ./front/src:/app/src
       - ./.env:/app/.env
       - ./front/public:/app/public
-    command: npm run start
+    command: npm run dev

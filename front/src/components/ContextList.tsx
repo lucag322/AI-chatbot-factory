@@ -5,7 +5,6 @@ import DateDisplay from "./DateDisplay";
 import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
 
-// Définir manuellement le type Context pour éviter les erreurs
 interface Context {
   id: string;
   title: string;
@@ -16,14 +15,14 @@ interface Context {
 }
 
 interface ContextListProps {
-  contexts: Context[];
+  contexts?: Context[]; // Rendre cette prop optionnelle
   chatbotId: string;
 }
 
-export default function ContextList({ contexts, chatbotId }: ContextListProps) {
-  // Le reste du code reste identique...
-
-  // Cette fonction peut maintenant être utilisée comme gestionnaire d'événement
+export default function ContextList({
+  contexts = [],
+  chatbotId,
+}: ContextListProps) {
   const handleDelete = async (contextId: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce contexte ?")) {
       await fetch(`/api/chatbots/${chatbotId}/contexts/${contextId}`, {
@@ -32,6 +31,17 @@ export default function ContextList({ contexts, chatbotId }: ContextListProps) {
       window.location.reload();
     }
   };
+
+  // Vérifier si contexts est vide
+  if (!contexts || contexts.length === 0) {
+    return (
+      <div className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+        <p className="text-center text-gray-500">
+          Aucun contexte ajouté pour ce chatbot.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">

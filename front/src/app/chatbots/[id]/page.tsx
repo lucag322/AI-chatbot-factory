@@ -56,17 +56,17 @@ export default async function ChatbotPage({
   });
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="mb-6 flex justify-between items-center">
-        <Link href="/chatbots" className="text-white hover:text-gray-400">
-          ← Retour aux chatbots
-        </Link>
-        <DeleteChatbotButton id={chatbot.id} />
-      </div>
+    <div className="container mx-auto overflow-x-hidden">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-8">
+        <div className="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-6 flex justify-between items-center mb-6  px-0.5 md:px-2 lg:px-3 ">
+          <Link href="/chatbots" className="text-white hover:text-gray-400">
+            ← Retour aux chatbots
+          </Link>
+          <DeleteChatbotButton id={chatbot.id} />
+        </div>
 
-      <div className="lg:grid lg:grid-cols-3 gap-6">
-        <div className="flex flex-col gap-6">
-          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+        <div className="col-span-2 sm:col-span-3 md:col-span-2 lg:col-span-2 flex flex-col gap-4">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full mx-0.5 md:mx-2 lg:mx-3">
             <h1 className="text-3xl font-bold mb-4 text-foreground">
               {chatbot.name}
             </h1>
@@ -81,7 +81,7 @@ export default async function ChatbotPage({
             </div>
           </div>
 
-          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full mx-0.5 md:mx-2 lg:mx-3">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Modifier le chatbot
             </h2>
@@ -107,8 +107,8 @@ export default async function ChatbotPage({
           </div>
         </div>
 
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+        <div className="col-span-2 sm:col-span-3 md:col-span-2 lg:col-span-4 flex flex-col gap-4">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full mx-0.5 md:mx-2 lg:mx-3">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-foreground">Contextes</h2>
               <Button asChild variant="default">
@@ -127,7 +127,7 @@ export default async function ChatbotPage({
             <ContextList contexts={contexts} chatbotId={chatbot.id} />
           </div>
 
-          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full mx-0.5 md:mx-2 lg:mx-3">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Script d&apos;intégration
             </h2>
@@ -147,7 +147,8 @@ export default async function ChatbotPage({
               }/api/chatbots/script?id=${chatbot.id}"></script>`}
             />
           </div>
-          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full">
+
+          <div className="bg-card backdrop-blur-md shadow-md rounded-lg p-6 border border-gray-300 h-full mx-0.5 md:mx-2 lg:mx-3">
             <h2 className="text-2xl font-bold mb-4 text-foreground">
               Tester le chatbot
             </h2>

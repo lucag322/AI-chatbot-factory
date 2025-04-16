@@ -148,9 +148,8 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
         throw new Error("Une erreur est survenue lors de la sauvegarde");
       }
 
-      // Forcer une actualisation de la page après la sauvegarde
       if (isEditing) {
-        router.refresh(); // Ceci va actualisez ChatbotPreview car il sera rechargé avec la page
+        router.refresh();
       }
 
       return await response.json();
@@ -159,6 +158,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
       return null;
     }
   };
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -266,7 +266,7 @@ export default function ChatbotForm({ initialData }: ChatbotFormProps = {}) {
           </div>
 
           <div className="mb-4">
-            <h4 className="text-sm font-medium mb-">Message de bienvenue</h4>
+            <h4 className="text-sm font-medium mb-2">Message de bienvenue</h4>
             <div className="p-2 bg-gray-100 rounded text-sm text-black">
               {welcomeMessage}
             </div>
